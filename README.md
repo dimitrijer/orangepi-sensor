@@ -5,12 +5,12 @@ low-cost temperature sensor.
 
 ## Hardware
 
-1 x OrangePi Zero
-1 x USB power adapter
-1 x case (optional)
-1 x Class 10 4GB (or more) SD card
-1 x OneWire DS18B20 temperature sensor
-1 x USB-to-serial adapter (`lsusb` reports QinHeng Electronics HL-340 USB-Serial adapter)
+* OrangePi Zero
+* USB power adapter
+* Case (optional)
+* Class 10 4GB (or more) SD card
+* OneWire DS18B20 temperature sensor
+* USB-to-serial adapter (`lsusb` reports QinHeng Electronics HL-340 USB-Serial adapter)
 
 ## Kernel
 
@@ -29,3 +29,18 @@ chroot environment at the very end of build process. In it, I set up WiFi
 network on startup by reading wireless network configuration - SSID and
 passphrase -from a file called `wpa.txt` on boot partition. I also disable
 NetworkManager and set up hostname according to `/boot/id.txt`.
+
+At this point you can burn the image to the card and boot OPZ. You might want
+to edit `/boot/wpa.txt` as OPZ will try to connect to WiFi on boot.
+
+## System configuration
+
+Now that I can access the sensor, I use Ansible to configure the system.
+
+TODO users, services, software
+
+## Metrics
+
+Graphite is used as metrics aggregation engine.
+
+I use Statsd on sensors to collect and periodically send metrics to Graphite.
