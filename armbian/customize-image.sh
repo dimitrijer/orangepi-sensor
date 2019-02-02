@@ -32,6 +32,7 @@ Main() {
 } # Main
 
 SetupSensor() {
+    # Setup stuff in /boot
     echo "alpha" > /boot/id.txt
     echo "network={
  ssid=\"Foundation\"
@@ -39,20 +40,23 @@ SetupSensor() {
  #key_mgmt=NONE
 }" > /boot/wpa.txt
 
-    echo "allow-hotplug eth0                                  
-no-auto-down eth0                                                                         
+    # Prepare interfaces
+    echo "allow-hotplug eth0
+no-auto-down eth0
 iface eth0 inet dhcp" > /etc/network/interfaces.d/eth0
-
     echo "auto wlan0
 allow-hotplug wlan0
 iface wlan0 inet dhcp
     wpa-conf /boot/wpa.txt" > /etc/network/interfaces.d/wlan0
-
     echo "auto lo
 iface lo inet loopback" > /etc/network/interfaces.d/lo
-
     echo "source /etc/network/interfaces.d/*" > /etc/network/interfaces
+
+    # We don't need NM
     systemctl disable NetworkManager.service
+
+    # Disable interactive first login
+    rm -f /root/.not_logged_in_yet
 }
 
 Main "$@"
