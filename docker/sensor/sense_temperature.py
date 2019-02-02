@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import subprocess
+import time
 
 from digitemp.master import UART_Adapter
 from digitemp.device import AddressableDevice, DS18B20
@@ -37,7 +38,7 @@ def read_temperature(rom):
 
 def led_toggle(value):
     p1 = subprocess.Popen(["echo", str(value)], stdout=subprocess.PIPE)
-    p2 = subprocess.Popen(["sudo", "tee", "/sys/class/leds/orangepi:red:status/brightness"], stdin=p1.stdout)
+    p2 = subprocess.Popen(["tee", "/sys/class/leds/orangepi:red:status/brightness"], stdin=p1.stdout)
     p2.communicate()
 
 if __name__ == '__main__':
@@ -54,3 +55,6 @@ if __name__ == '__main__':
     for rom in get_roms():
         read_temperature(rom)
     led_toggle(0)
+
+    # Sleep some time before docker restarts the container
+    time.sleep(45)
