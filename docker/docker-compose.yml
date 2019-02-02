@@ -1,0 +1,35 @@
+version: '3'
+services:
+  statsd:
+    image: dimitrijer/statsd:latest
+    expose:
+      - "8125/udp"
+    networks:
+      - metrics
+    container_name: statsd
+    restart: always
+
+  sensor:
+    image: dimitrijer/sensor:latest
+    networks:
+      - metrics
+    container_name: sensor
+    depends_on:
+      - statsd
+    restart: always
+    privileged: true
+
+  watchtower:
+    image: v2tec/watchtower:armhf-0.3.0
+    networks:
+      - metrics
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/dimitrijer/.docker/config.json:/config.json
+    command: --interval 30
+    container_name: watchtower
+    restart: always
+
+networks:
+  metrics:
+    driver: bridge

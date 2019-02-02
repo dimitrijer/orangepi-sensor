@@ -1,5 +1,5 @@
 {
-  "graphiteHost": "graphite-server",
+  "graphiteHost": "192.168.88.3",
   "graphitePort": 2003,
   "port": 8125,
   "flushInterval": 30000,

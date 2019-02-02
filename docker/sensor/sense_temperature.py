@@ -43,7 +43,7 @@ def led_toggle(value):
 
 if __name__ == '__main__':
     bus = UART_Adapter('/dev/ttyUSB0')
-    stats = StatsClient('localhost', 8125, 'readtemp')
+    stats = StatsClient('statsd', 8125, 'readtemp')
     try:
         with open('/boot/id.txt', 'r') as f:
             sensor_id = f.readline().strip()
@@ -56,5 +56,6 @@ if __name__ == '__main__':
         read_temperature(rom)
     led_toggle(0)
 
+    print('Sleeping...')
     # Sleep some time before docker restarts the container
-    time.sleep(45)
+    time.sleep(15)
