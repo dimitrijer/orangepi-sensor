@@ -1,0 +1,30 @@
+---
+- name: Change root password
+  user:
+    name: root
+    state: present
+    password: "{{ root_password }}"
+
+- name: Create login user
+  user:
+    name: "{{ login_user }}"
+    state: present
+    createhome: yes
+    groups:
+      - sudo
+      - netdev
+      - audio
+      - video
+      - dialout
+      - plugdev
+      - input
+      - systemd-journal
+      - ssh
+      - docker
+
+- name: Add authorized key
+  authorized_key:
+    user: "{{ login_user }}"
+    state: present
+    key: "{{ login_user_pubkey }}"
+
