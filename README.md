@@ -48,5 +48,5 @@ I use Statsd on sensors to collect and periodically send metrics to Graphite.
 
 ## TODO
 
-* Use (statsite)[https://github.com/statsite/statsite] instead of Statsd for
+* Use [statsite](https://github.com/statsite/statsite) instead of Statsd for
   sending metrics - it is based on Statsd and actively maintained.
