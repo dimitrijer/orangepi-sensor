@@ -1,29 +1,16 @@
 ---
 - hosts: sensors
   roles:
-    - role: "nickjj.docker"
-      tags: ["docker"]
+    - role: nickjj.docker
+      tags: docker
       vars:
-        docker__registries:
         docker__apt_repository: >
          deb [arch=armhf]
          https://download.docker.com/linux/{{ ansible_distribution | lower }}
          {{ ansible_distribution_release }} {{ docker__channel | join (' ') }}
-
-    - role: "users"
-      tags: ["users"]
-
-  post_tasks:
-    - name: Log in to Docker registry
-      docker_login:
-        username: dimitrijer
-        password: **********
-      become: true
-      become_user: "{{ login_user }}"
-
-    - name: Start Docker services
-      docker_service:
-        project_src: ../docker
-        timeout: 45
-      become: true
-      become_user: "{{ login_user }}"
+    - role: users
+      tags: users
+    - role: services
+      tags: services
+      vars:
+        ansible_python_interpreter: "/usr/bin/env python-docker"

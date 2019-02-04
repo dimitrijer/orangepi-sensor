@@ -1,0 +1,6 @@
+---
+login_user: dimitrijer
+login_user_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEvrYF9dRID7u/l7I6pI5pFdqoU6hfaXbtIl3yR8S7+C dimitrijer@dimitrijes-mbp.hq.nordeus.com
+docker_user: dimitrijer
+docker_password: "{{ vault_docker_password }}"
+root_password: "{{ vault_root_password }}"

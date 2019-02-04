@@ -1,0 +1,20 @@
+---
+- name: Log in to Docker registry
+  docker_login:
+    username: "{{ docker_user }}"
+    password: "{{ docker_password }}"
+  become: true
+  become_user: "{{ login_user }}"
+
+- name: Copy docker-compose.yml
+  copy:
+    src: ../docker/docker-compose.yml
+    dest: "/home/{{ login_user }}"
+    owner: "{{ login_user }}"
+
+- name: Start Docker services
+  docker_service:
+    project_src: "/home/{{ login_user }}"
+    timeout: 45
+  become: true
+  become_user: "{{ login_user }}"

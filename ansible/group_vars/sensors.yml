@@ -1,4 +1,0 @@
----
-login_user: dimitrijer
-# Necessary because we are using docker_* modules after docker role.
-ansible_python_interpreter: "/usr/bin/env python-docker"
