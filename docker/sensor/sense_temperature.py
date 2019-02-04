@@ -8,6 +8,9 @@ from digitemp.device import AddressableDevice, DS18B20
 from timeit import default_timer as timer
 from statsd import StatsClient
 
+CYCLE_TIME_SECONDS = 25
+MIN_SLEEP_INTERVAL = 1
+
 def get_roms():
     try:
         start = timer()
@@ -42,6 +45,8 @@ def led_toggle(value):
     p2.communicate()
 
 if __name__ == '__main__':
+    start_time = time.time()
+
     bus = UART_Adapter('/dev/ttyUSB0')
     stats = StatsClient('statsd', 8125, 'readtemp')
     try:
@@ -56,6 +61,10 @@ if __name__ == '__main__':
         read_temperature(rom)
     led_toggle(0)
 
-    print('Sleeping...')
-    # Sleep some time before docker restarts the container
-    time.sleep(15)
+    elapsed_time = time.time() - start_time
+
+    sleep_interval = CYCLE_TIME_SECONDS - elapsed_time
+    if sleep_interval > MIN_SLEEP_INTERVAL:
+        # Sleep some time before docker restarts the container
+        print('Sleeping for {0:.3f}s...'.format(sleep_interval))
+        time.sleep(sleep_interval)
