@@ -29,8 +29,10 @@ I also have a custom script called `customize-image.sh`, which should be placed
 in `userpatches` folder before building the image. This script is called in
 chroot environment at the very end of build process. In it, I set up WiFi
 network on startup by reading wireless network configuration - SSID and
-passphrase -from a file called `wpa.txt` on boot partition. I also disable
-NetworkManager and set up hostname according to `/boot/id.txt`.
+passphrase - from a file called `wpa.txt` on boot partition. I also disable
+NetworkManager, set up hostname according to `/boot/id.txt` and disable
+first-time password change for root user and login user creation (Ansible will
+manage that).
 
 At this point you can burn the image to the card and boot OPZ. You might want
 to edit `/boot/wpa.txt` as OPZ will try to connect to WiFi on boot.
@@ -61,14 +63,14 @@ Note that you will need to have fingerprint of the box in your
 (stored in group vars). You can fingerprint the box with:
 
 ```bash
-ssh-keyscan -H <box_ip> ~/.ssh/known_hosts`
+ssh-keyscan -H <box_ip> ~/.ssh/known_hosts
 ```
 
 ## Services
 
 I use three containers, managed by `docker-compose.yml`.
-* Statsd container that is used to aggregate and send metrics to Graphite
-  server
+* Statsd container that is used to aggregate metrics locally and send metrics
+  to Graphite server
 * Python script that runs in a container, reads temperature and sends readings
   to Statsd via UDP
 * [Watchtower](https://github.com/v2tec/watchtower) container that monitors
@@ -78,10 +80,11 @@ I use three containers, managed by `docker-compose.yml`.
 ## Metrics
 
 Graphite is used as metrics aggregation engine, and Grafana is used to display
-them nicely.
+them in a nice dashboard.
 
 ## TODO
 
+* Add sensor picture
 * Add Grafana screenshot
 * Use [statsite](https://github.com/statsite/statsite) instead of Statsd for
   sending metrics - it is based on Statsd and actively maintained
