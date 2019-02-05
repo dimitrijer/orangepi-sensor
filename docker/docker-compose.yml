@@ -13,6 +13,8 @@ services:
     image: dimitrijer/sensor:latest
     networks:
       - metrics
+    volumes:
+      - /boot:/boot:ro
     container_name: sensor
     depends_on:
       - statsd
