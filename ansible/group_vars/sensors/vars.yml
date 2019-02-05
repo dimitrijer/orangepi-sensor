@@ -6,3 +6,6 @@ docker_password: "{{ vault_docker_password }}"
 root_password: "{{ vault_root_password }}"
 root_pubkey: "{{ login_user_pubkey }}"
 root_password: "{{ vault_root_password }}"
+
+ansible_user: root
+ansible_ssh_pass: 1234

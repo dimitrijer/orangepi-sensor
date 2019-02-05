@@ -57,6 +57,7 @@ iface lo inet loopback" > /etc/network/interfaces.d/lo
 
     # Disable interactive first login
     rm -f /root/.not_logged_in_yet
+    echo -e "1234\n1234" | (passwd root)
 }
 
 Main "$@"
