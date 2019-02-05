@@ -1,7 +1,6 @@
 # OrangePi Zero Powered Temperature Sensor
 
-I used [OrangePi Zero](http://www.orangepi.org/orangepizero/) to build a
-low-cost, self-updating temperature sensor. It uses Wifi for connectivity.
+I used [OrangePi Zero](http://www.orangepi.org/orangepizero/) to build a low-cost, self-updating temperature sensor. It uses Wifi for connectivity.
 Connection parameters are stored as plaintext files on FAT32 /boot partition.
 
 ## Hardware
@@ -81,6 +80,12 @@ I use three containers, managed by `docker-compose.yml`.
 
 Graphite is used as metrics aggregation engine, and Grafana is used to display
 them in a nice dashboard.
+
+## Images
+
+![Front](/images/opz1.jpg)
+![Rear](/images/opz2.jpg)
+![Top](/images/opz3.jpg)
 
 ## TODO
 
