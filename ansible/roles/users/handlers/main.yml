@@ -1,0 +1,6 @@
+---
+- name: change root password
+  user:
+    name: root
+    state: present
+    password: "{{ root_password }}"

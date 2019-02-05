@@ -1,15 +1,17 @@
 ---
-- name: Change root password
-  user:
-    name: root
+- name: Add authorized key for root
+  authorized_key:
+    user: root
     state: present
-    password: "{{ root_password }}"
+    key: "{{ root_pubkey }}"
+  notify: change root password
 
 - name: Create login user
   user:
     name: "{{ login_user }}"
     state: present
     createhome: yes
+    shell: /bin/bash
     groups:
       - sudo
       - netdev
@@ -22,7 +24,7 @@
       - ssh
       - docker
 
-- name: Add authorized key
+- name: Add authorized key for login user
   authorized_key:
     user: "{{ login_user }}"
     state: present

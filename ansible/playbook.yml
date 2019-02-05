@@ -12,5 +12,3 @@
       tags: users
     - role: services
       tags: services
-      vars:
-        ansible_python_interpreter: "/usr/bin/env python-docker"

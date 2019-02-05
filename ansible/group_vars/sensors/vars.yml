@@ -4,3 +4,5 @@ login_user_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEvrYF9dRID7u/l7I6pI5pFdq
 docker_user: dimitrijer
 docker_password: "{{ vault_docker_password }}"
 root_password: "{{ vault_root_password }}"
+root_pubkey: "{{ login_user_pubkey }}"
+root_password: "{{ vault_root_password }}"
