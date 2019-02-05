@@ -83,8 +83,13 @@ them in a nice dashboard.
 
 ## Images
 
+Front (single USB port and Ethernet port can be seen)
 ![Front](/images/opz1.jpg)
+
+Rear (microSD slot on the bottom and mini USB for power)
 ![Rear](/images/opz2.jpg)
+
+Top
 ![Top](/images/opz3.jpg)
 
 ## TODO
