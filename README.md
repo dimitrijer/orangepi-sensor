@@ -1,7 +1,11 @@
 # OrangePi Zero Powered Temperature Sensor
 
-I used [OrangePi Zero](http://www.orangepi.org/orangepizero/) to build a low-cost, self-updating temperature sensor. It uses Wifi for connectivity.
-Connection parameters are stored as plaintext files on FAT32 /boot partition.
+I used [OrangePi Zero](http://www.orangepi.org/orangepizero/) to build a low-cost,
+self-updating temperature sensor. It uses Wifi for connectivity. Connection
+parameters are stored as plaintext files on FAT32 /boot partition.
+
+Temperature sensors are standard 1Wire DS18B20 sensors (serial connection).
+Multiple sensors can be daisy-chained and connected to single box
 
 ## Hardware
 
@@ -71,10 +75,16 @@ I use three containers, managed by `docker-compose.yml`.
 * Statsd container that is used to aggregate metrics locally and send metrics
   to Graphite server
 * Python script that runs in a container, reads temperature and sends readings
-  to Statsd via UDP
+  to Statsd via UDP. Since this container needs `/sys` and `/dev` access, it
+  needs to be started with `--privileged` flag
 * [Watchtower](https://github.com/v2tec/watchtower) container that monitors
   Docker repository for new versions of images of running containers, downloads
   them and restarts running container instances (including itself)
+
+All three Docker containers are started with `--restart=always`, meaning that
+containers will be restarted on any error, clean termination and even on reboot,
+if they are not already running.
+
 
 ## Metrics
 
@@ -97,7 +107,6 @@ Top
 
 ## TODO
 
-* Add sensor picture
 * Add Grafana screenshot
 * Use [statsite](https://github.com/statsite/statsite) instead of Statsd for
   sending metrics - it is based on Statsd and actively maintained
