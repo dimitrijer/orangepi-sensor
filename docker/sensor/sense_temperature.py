@@ -45,7 +45,7 @@ def led_toggle(value):
     p2.communicate()
 
 if __name__ == '__main__':
-    start_time = time.time()
+    start = timer()
 
     bus = UART_Adapter('/dev/ttyUSB0')
     stats = StatsClient('statsd', 8125, 'readtemp')
@@ -61,7 +61,8 @@ if __name__ == '__main__':
         read_temperature(rom)
     led_toggle(0)
 
-    elapsed_time = time.time() - start_time
+    elapsed_time = timer() - start
+    stats.timing('runtime.%s.elapsed' % sensor_id, int(1000 * elapsed_time))
 
     sleep_interval = CYCLE_TIME_SECONDS - elapsed_time
     if sleep_interval > MIN_SLEEP_INTERVAL:
