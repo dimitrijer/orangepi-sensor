@@ -69,3 +69,6 @@ if __name__ == '__main__':
         # Sleep some time before docker restarts the container
         print('Sleeping for {0:.3f}s...'.format(sleep_interval))
         time.sleep(sleep_interval)
+
+    elapsed_total = timer() - start
+    stats.timing('runtime.%s.total_elapsed' % sensor_id, int(1000 * elapsed_total))
