@@ -8,7 +8,7 @@ from digitemp.device import AddressableDevice, DS18B20
 from timeit import default_timer as timer
 from statsd import StatsClient
 
-CYCLE_TIME_SECONDS = 25
+CYCLE_TIME_SECONDS = 20
 MIN_SLEEP_INTERVAL = 1
 
 def get_roms():
