@@ -46,9 +46,8 @@ def led_toggle(value):
 
 def read_cpu_temperature():
     try:
-        region0_temperature = subprocess.check_output(["cat", "/sys/devices/virtual/thermal/thermal_zone0/temp"])
-        region1_temperature = subprocess.check_output(["cat", "/sys/devices/virtual/thermal/thermal_zone1/temp"])
-        return (float(region0_temperature) + float(region1_temperature)) * 0.5
+        region0_temperature = subprocess.check_output(["cat", "/etc/armbianmonitor/datasources/soctemp"])
+        return float(region0_temperature)
     except:
         return float(-1)
 
