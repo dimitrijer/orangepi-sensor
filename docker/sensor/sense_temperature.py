@@ -44,6 +44,14 @@ def led_toggle(value):
     p2 = subprocess.Popen(["tee", "/sys/class/leds/orangepi:red:status/brightness"], stdin=p1.stdout)
     p2.communicate()
 
+def read_cpu_temperature():
+    try:
+        region0_temperature = subprocess.check_output(["cat", "/sys/devices/virtual/thermal/thermal_zone0/temp"])
+        region1_temperature = subprocess.check_output(["cat", "/sys/devices/virtual/thermal/thermal_zone1/temp"])
+        return (float(region0_temperature) + float(region1_temperature)) * 0.5
+    except:
+        return float(-1)
+
 if __name__ == '__main__':
     start = timer()
 
@@ -63,6 +71,8 @@ if __name__ == '__main__':
 
     elapsed_time = timer() - start
     stats.timing('runtime.%s.elapsed' % sensor_id, int(1000 * elapsed_time))
+
+    stats.gauge('system.%s.cpu.temperature' % sensor_id, read_cpu_temperature())
 
     sleep_interval = CYCLE_TIME_SECONDS - elapsed_time
     if sleep_interval > MIN_SLEEP_INTERVAL:
